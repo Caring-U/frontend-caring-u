@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import BackArrow from "../svgIcons/BackArrow";
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex justify-center py-2 bg-sky-600">
@@ -17,7 +19,9 @@ export default function ProfilePage() {
       <div className="flex justify-center">
         <div className="max-w-5xl">
           <div className="my-6">
-            <BackArrow />
+            <button onClick={() => navigate("/")}>
+              <BackArrow />
+            </button>
           </div>
           <div className="flex gap-4">
             <div className="w-1/3">
