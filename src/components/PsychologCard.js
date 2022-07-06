@@ -23,7 +23,7 @@ export default function PsychologCard() {
             </div>
             <h1 className="text-xs font-bold">5.0</h1>
           </div>
-          <h1 className="text-xs font-extralight text-gray-400">17 Feedback</h1>
+          {/* <h1 className="text-xs font-extralight text-gray-400">17 Feedback</h1> */}
         </div>
       </div>
     </div>
