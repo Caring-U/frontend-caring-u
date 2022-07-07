@@ -8,12 +8,12 @@ import ProfilePagePsycolog from "./pages/ProfilePagePsycholog";
 export default function App() {
     return (
         <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/psikolog/:id" element={<ProfilePage />} />
-            <Route path="/psycolog/" element={<HomePagePsycolog />} />
-            <Route path="/psycolog/psycologProfile" element={<ProfilePagePsycolog />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/client/psycolog" element={<HomePage />} />
+            <Route path="/client/psycolog/:id" element={<ProfilePage />} />
+            <Route path="/psycolog/" element={<HomePagePsycolog />} />
+            <Route path="/psycolog/psycologProfile" element={<ProfilePagePsycolog />} />
         </Routes>
     );
 }
