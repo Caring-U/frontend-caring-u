@@ -4,6 +4,7 @@ export default function Dashboard() {
   return (
     <>
       <NavbarCustom />
+
       <div className="container mx-auto flex gap-5 py-10">
         <div className="w-1/4 shadow-xl space-y-4 py-4">
           <img src="/foto/profil-agit.png" alt="profil" />

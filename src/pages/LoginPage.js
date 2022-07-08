@@ -1,6 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+    console.log(input);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/users/login", input)
+      .then(({ data }) => {
+        localStorage.setItem("access_token", data.result);
+        localStorage.setItem("role", data.role);
+        switch (data.role) {
+          case "admin":
+            navigate("/admin");
+            break;
+          case "client":
+            navigate("/client");
+            break;
+          case "psycolog":
+            navigate("/psycolog");
+            break;
+          default:
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="2xl:container h-screen m-auto">
       <div hidden className="fixed inset-0 w-7/12 lg:block">
@@ -35,9 +68,12 @@ const LoginPage = () => {
             </span>
           </div>
 
-          <form action="" className="space-y-8 py-6">
+          <form onSubmit={handleSubmit} className="space-y-8 py-6">
             <div>
               <input
+                name="email"
+                value={input.email}
+                onChange={handleChange}
                 type="email"
                 placeholder="Email lo apa"
                 className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
@@ -46,6 +82,9 @@ const LoginPage = () => {
 
             <div className="flex flex-col items-end">
               <input
+                name="password"
+                value={input.password}
+                onChange={handleChange}
                 type="password"
                 placeholder="Password lo bro"
                 className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
