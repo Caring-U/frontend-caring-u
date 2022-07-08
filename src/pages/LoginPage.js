@@ -53,8 +53,8 @@ const LoginPage = () => {
       ></div>
       <div className="relative h-full ml-auto lg:w-6/12">
         <div className="m-auto py-12 px-6 sm:p-20 xl:w-10/12">
-          <div className="space-y-4">
-            <a href="">
+          <div className="space-y-4 flex justify-center flex-col items-center">
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley">
               <img src="/foto/logo.png" className="w-40" alt="charingu logo" />
             </a>
             <p className="font-medium text-lg text-gray-600">
@@ -75,29 +75,32 @@ const LoginPage = () => {
                 value={input.email}
                 onChange={handleChange}
                 type="email"
-                placeholder="Email lo apa"
-                className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
+                placeholder="Your Email"
+                className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-sky-600 focus:invalid:outline-none"
               />
             </div>
 
-            <div className="flex flex-col items-end">
+            <div>
               <input
                 name="password"
                 value={input.password}
                 onChange={handleChange}
                 type="password"
-                placeholder="Password lo bro"
-                className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-red-400 focus:invalid:outline-none"
+                placeholder="Your Password "
+                className="w-full py-3 px-6 ring-1 ring-gray-300 rounded-lg placeholder-gray-600 bg-transparent transition disabled:ring-gray-200 disabled:bg-gray-100 disabled:placeholder-gray-400 invalid:ring-sky-600 focus:invalid:outline-none"
               />
             </div>
 
             <div>
-              <button className="w-full px-6 py-3 rounded-lg bg-sky-500 transition hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-800">
+              <button className="w-full px-6 py-3 rounded-lg bg-sky-600 transition hover:bg-sky-700 focus:bg-sky-700 ">
                 <span className="font-semibold text-white text-lg">Login</span>
               </button>
               <p class="border-t pt-6 text-sm">
                 Don't have an account ?{" "}
-                <button href="#" className="text-sky-500">
+                <button
+                  onClick={() => navigate("/register")}
+                  className="text-sky-500"
+                >
                   Sign up
                 </button>
               </p>

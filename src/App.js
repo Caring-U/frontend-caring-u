@@ -1,10 +1,15 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/clients/HomePage";
 import PsycologProfilePage from "./pages/clients/PsycologProfilePage";
 import Dashboard from "./pages/clients/Dashboard";
 import CheckoutPage from "./pages/clients/CheckoutPage";
+import Dasboard from "./pages/Dashboard";
+import SideBarAdmin from "./components/SideBarAdmin";
+import TablePsikolog from "./components/TablePsikolog";
+import TablePatient from "./components/TablePatient";
+
 import HomePagePsycolog from "./pages/HomePagePsycolog";
 import ProfilePagePsycolog from "./pages/ProfilePagePsycholog";
 
@@ -22,6 +27,10 @@ export default function App() {
         path="/psycolog/psycologProfile"
         element={<ProfilePagePsycolog />}
       />
+      {location.pathname.includes("/admin") ? <SideBarAdmin /> : null}
+      <Route path="/admin" element={<Dasboard />} />
+      <Route path="/admin/psycolog" element={<TablePsikolog />} />
+      <Route path="/admin/patient" element={<TablePatient />} />
     </Routes>
   );
 }
