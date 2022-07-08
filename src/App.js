@@ -14,23 +14,26 @@ import HomePagePsycolog from "./pages/HomePagePsycolog";
 import ProfilePagePsycolog from "./pages/ProfilePagePsycholog";
 
 export default function App() {
+  const location = useLocation();
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/client" element={<Dashboard />} />
-      <Route path="/client/checkout" element={<CheckoutPage />} />
-      <Route path="/client/psycolog" element={<HomePage />} />
-      <Route path="/client/psycolog/:id" element={<PsycologProfilePage />} />
-      <Route path="/psycolog/" element={<HomePagePsycolog />} />
-      <Route
-        path="/psycolog/psycologProfile"
-        element={<ProfilePagePsycolog />}
-      />
+    <>
       {location.pathname.includes("/admin") ? <SideBarAdmin /> : null}
-      <Route path="/admin" element={<Dasboard />} />
-      <Route path="/admin/psycolog" element={<TablePsikolog />} />
-      <Route path="/admin/patient" element={<TablePatient />} />
-    </Routes>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/client" element={<Dashboard />} />
+        <Route path="/client/checkout" element={<CheckoutPage />} />
+        <Route path="/client/psycolog" element={<HomePage />} />
+        <Route path="/client/psycolog/:id" element={<PsycologProfilePage />} />
+        <Route path="/psycolog/" element={<HomePagePsycolog />} />
+        <Route
+          path="/psycolog/psycologProfile"
+          element={<ProfilePagePsycolog />}
+        />
+        <Route path="/admin" element={<Dasboard />} />
+        <Route path="/admin/psycolog" element={<TablePsikolog />} />
+        <Route path="/admin/patient" element={<TablePatient />} />
+      </Routes>
+    </>
   );
 }
