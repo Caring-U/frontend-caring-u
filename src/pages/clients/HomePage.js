@@ -1,6 +1,6 @@
-import NavbarCustom from "../components/NavbarCustom";
-import PsychologCard from "../components/PsychologCard";
-import CircleIcon from "../svgIcons/CircleIcon";
+import NavbarCustom from "../../components/NavbarCustom";
+import PsychologCard from "../../components/PsychologCard";
+import CircleIcon from "../../svgIcons/CircleIcon";
 
 export default function HomePage() {
   return (

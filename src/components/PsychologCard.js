@@ -6,7 +6,7 @@ export default function PsychologCard() {
   return (
     <div
       className="w-56 h-96 rounded-xl shadow-xl"
-      onClick={() => navigate("/psikolog/id")}
+      onClick={() => navigate("/client/psycolog/id")}
     >
       <img src="/foto/profil-agit.png" alt="image" />
       <div className="px-4 py-2">

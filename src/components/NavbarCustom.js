@@ -7,8 +7,8 @@ const clientRoutes = [
     path: "/client",
   },
   {
-    name: "Profile",
-    path: "/client/profile",
+    name: "Psycologs",
+    path: "/client/psycolog",
   },
 ];
 
