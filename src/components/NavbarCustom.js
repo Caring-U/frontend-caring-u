@@ -2,14 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const clientRoutes = [
-    {
-        name: "Dashboard",
-        path: "/client",
-    },
-    {
-        name: "Profile",
-        path: "/client/profile",
-    },
+
+  {
+    name: "Dashboard",
+    path: "/client",
+  },
+  {
+    name: "Psycologs",
+    path: "/client/psycolog",
+  },
 ];
 
 const AdminRoutes = [
@@ -58,6 +59,7 @@ export default function NavbarCustom() {
                     <button>Logout</button>
                 </div>
             </div>
+
         </div>
     );
 }

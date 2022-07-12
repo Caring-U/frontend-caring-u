@@ -5,7 +5,6 @@ export default function CircleIcon() {
       width="16"
       height="16"
       fill="currentColor"
-      class="bi bi-circle-fill"
       viewBox="0 0 16 16"
       className="fill-gray-400"
     >
