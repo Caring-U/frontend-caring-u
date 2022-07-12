@@ -4,6 +4,11 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+
+const baseURL = "http://localhost:3000";
+
+axios.defaults.baseURL = baseURL;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -7,8 +7,8 @@ const clientRoutes = [
     path: "/client",
   },
   {
-    name: "Profile",
-    path: "/client/profile",
+    name: "Psycologs",
+    path: "/client/psycolog",
   },
 ];
 
@@ -52,8 +52,12 @@ export default function NavbarCustom() {
       <div className="w-3/4 flex justify-between items-center">
         <img src="/foto/logo.png" alt="logo" className="w-28" />
         <div className="flex gap-4 text-white">
-          {routes.map((el) => {
-            return <button onClick={() => navigate(el.path)}>{el.name}</button>;
+          {routes.map((el, i) => {
+            return (
+              <button onClick={() => navigate(el.path)} key={i}>
+                {el.name}
+              </button>
+            );
           })}
           <button>Logout</button>
         </div>
