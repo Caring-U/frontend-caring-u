@@ -1,6 +1,8 @@
+import { useState } from "react";
 import NavbarCustom from "../../components/NavbarCustom";
 
 export default function CheckoutPage() {
+  const [data, setData] = useState(JSON.parse(localStorage.getItem("order")));
   return (
     <div>
       <NavbarCustom />
@@ -41,8 +43,10 @@ export default function CheckoutPage() {
           <div className="border-y px-4 py-4">
             <h1 className="font-bold text-2xl text-gray-800 mb-4">Pesanan</h1>
             <div className="flex justify-between mb-4 text-semibold text-gray-500">
-              <h1>Agit Zaini Hidayat, Psi,. - Senin, 21 Juli 2022</h1>
-              <h1>Rp. 100.000</h1>
+              <h1>
+                {data.name},. - {data.day}
+              </h1>
+              <h1>{data.price}</h1>
             </div>
           </div>
           <div className="border-y px-4 py-4">
