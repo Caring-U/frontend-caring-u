@@ -1,19 +1,42 @@
-import { React, useState } from "react";
+import axios from "axios";
+import { React, useEffect, useState } from "react";
 
 export default function ProfilePagePsycolog() {
     const [showModal, setShowModal] = useState(false);
+    const [profile, setProfile] = useState();
+
+    useEffect(() => {
+        axios
+            .get("/psikolog/profile", {
+                headers: {
+                    access_token: localStorage.getItem("access_token"),
+                },
+            })
+            .then(({ data }) => {
+                setProfile(data.result);
+                console.log(data.result);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
     const [input, setInput] = useState({
-        senin: "",
-        selasa: "",
-        rabu: "",
-        kamis: "",
-        jumat: "",
-        sabtu: "",
-        minggu: "",
+        day1: "",
+        day2: "",
+        day3: "",
+        day4: "",
+        day5: "",
     });
+
     function handleOnChange(e) {
         const { name, value } = e.target;
         setInput({ ...input, [name]: value });
+    }
+
+    function handleSave() {
+        setShowModal(false);
+    }
+    function handleCancel() {
+        setShowModal(false);
     }
     return (
         <>
@@ -51,7 +74,7 @@ export default function ProfilePagePsycolog() {
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                                         <div className="relative">
-                                            <img alt="..." src="/foto/profil-agit.png" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16" style={{ maxWidth: "150px" }} />
+                                            <img alt="..." src={profile.imageUrl} className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16" style={{ maxWidth: "150px" }} />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -69,7 +92,7 @@ export default function ProfilePagePsycolog() {
                                     <div className="w-full lg:w-4/12 px-4 lg:order-1"></div>
                                 </div>
                                 <div className="text-center mt-12">
-                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">Agit Zaini Hidayat</h3>
+                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">{profile.fullname}</h3>
                                     <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                                         <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i> Kelapa Gading, DKI Jakarta
                                     </div>
@@ -85,10 +108,7 @@ export default function ProfilePagePsycolog() {
                                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                                     <div className="flex flex-wrap justify-center">
                                         <div className="w-full lg:w-9/12 px-4">
-                                            <p className="mb-4 text-lg leading-relaxed text-gray-800">
-                                                I am very happy with the application development process because there are many lessons and innovations that are very challenging to solve, and my motivation at this time is to gain experience
-                                                and learn from it.
-                                            </p>
+                                            <p className="mb-4 text-lg leading-relaxed text-gray-800">{profile.description}</p>
                                             <a href="#pablo" className="font-normal text-blue-500" onClick={(e) => e.preventDefault()}>
                                                 Setting Profile
                                             </a>
@@ -117,40 +137,40 @@ export default function ProfilePagePsycolog() {
                                 <div className="relative py-3 px-4 flex-auto row-auto ">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.senin}</p>
-                                        <input type="date" name="senin" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {input.day1}</p>
+                                        <input type="date" name="day1" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
                                 <div className="relative py-3 px-4 flex-auto">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.selasa}</p>
-                                        <input type="date" name="selasa" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {input.day2}</p>
+                                        <input type="date" name="day2" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
                                 <div className="relative py-3 px-4 flex-auto">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.rabu}</p>
-                                        <input type="date" name="rabu" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {input.day3}</p>
+                                        <input type="date" name="day3" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
                                 <div className="relative py-3 px-4 flex-auto">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.kamis}</p>
-                                        <input type="date" name="kamis" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {input.day4}</p>
+                                        <input type="date" name="day4" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
                                 <div className="relative py-3 px-4 flex-auto">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.jumat}</p>
-                                        <input type="date" name="jumat" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {input.day5}</p>
+                                        <input type="date" name="day5" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
@@ -159,14 +179,14 @@ export default function ProfilePagePsycolog() {
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => handleCancel}
                                     >
                                         Close
                                     </button>
                                     <button
                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => handleSave}
                                     >
                                         Save Changes
                                     </button>

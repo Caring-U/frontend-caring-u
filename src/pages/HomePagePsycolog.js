@@ -1,7 +1,23 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { myDateFormat } from "../helpers/CustomDate";
 
 export default function HomePagePsycolog() {
-    let [schedule, setSchedule] = useState();
+    let [schedule, setSchedule] = useState([]);
+    useEffect(() => {
+        axios
+            .get("/psikolog", {
+                headers: {
+                    access_token: localStorage.getItem("access_token"),
+                },
+            })
+            .then(({ data }) => {
+                setSchedule(data.result.rows);
+                // console.log(data.result.rows);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+    // console.log("==" + schedule);
     return (
         <>
             <main>
@@ -59,7 +75,6 @@ export default function HomePagePsycolog() {
                                     <table className="table-auto border-separate border-spacing-2 border border-slate-400">
                                         <thead>
                                             <tr>
-                                                <th className="border border-slate-300">Day</th>
                                                 <th className="border border-slate-300">Date</th>
                                                 <th className="border border-slate-300">Time</th>
                                                 <th className="border border-slate-300">Status</th>
@@ -67,23 +82,44 @@ export default function HomePagePsycolog() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td className="border border-slate-300">Today</td>
-                                                <td className="border border-slate-300">12-July-2022</td>
-                                                <td className="border border-slate-300">06:00 PM</td>
-                                                <td className="border border-slate-300 font-bold uppercase text-xs ">Scheduled</td>
-                                                <td className="border border-slate-300">
-                                                    <button
-                                                        className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-1 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                        type="button"
-                                                    >
-                                                        Join
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td className="border border-slate-300">Friday</td>
-                                                <td className="border border-slate-300">13-July-2022</td>
+                                            {schedule.map((sec) => {
+                                                return (
+                                                    <>
+                                                        <tr>
+                                                            <td className="border border-slate-300">{myDateFormat(sec.day)}</td>
+                                                            <td className="border border-slate-300">{sec.time}</td>
+                                                            {sec.CustomerBooking.paymentStatus == "paid" ? (
+                                                                <>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">Scheduled</td>
+                                                                    <td className="border border-slate-300">
+                                                                        <button
+                                                                            className="bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-xs px-4 py-1 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                            type="button"
+                                                                        >
+                                                                            Join
+                                                                        </button>
+                                                                    </td>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">Free Booking</td>
+                                                                    <td>
+                                                                        <button
+                                                                            className="bg-gray-500 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-1 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                            type="button"
+                                                                        >
+                                                                            Hasn't Been Yet
+                                                                        </button>
+                                                                    </td>
+                                                                </>
+                                                            )}
+                                                        </tr>
+                                                    </>
+                                                );
+                                            })}
+                                            {/* <tr>
+                                            <td className="border border-slate-300">Friday</td>
+                                            <td className="border border-slate-300">13-July-2022</td>
                                                 <td className="border border-slate-300">06:00 PM</td>
                                                 <td className="border border-slate-300 font-bold uppercase text-xs ">Scheduled</td>
                                                 <td className="border border-slate-300">
@@ -136,7 +172,7 @@ export default function HomePagePsycolog() {
                                                 <td className="border border-slate-300">06:00 PM</td>
                                                 <td className="border border-slate-300 font-bold uppercase text-xs ">Free Booking</td>
                                                 <td className="border border-slate-300"></td>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>
