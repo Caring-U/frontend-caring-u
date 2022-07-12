@@ -2,7 +2,19 @@ import { React, useState } from "react";
 
 export default function ProfilePagePsycolog() {
     const [showModal, setShowModal] = useState(false);
-    const [date, setDate] = useState();
+    const [input, setInput] = useState({
+        senin: "",
+        selasa: "",
+        rabu: "",
+        kamis: "",
+        jumat: "",
+        sabtu: "",
+        minggu: "",
+    });
+    function handleOnChange(e) {
+        const { name, value } = e.target;
+        setInput({ ...input, [name]: value });
+    }
     return (
         <>
             <main className="profile-page">
@@ -102,19 +114,43 @@ export default function ProfilePagePsycolog() {
                                     </button>
                                 </div>
                                 {/*body*/}
-                                <div className="relative py-3 px-4 flex-auto">
+                                <div className="relative py-3 px-4 flex-auto row-auto ">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {date}</p>
-                                        <input type="date" onChange={(e) => setDate(e.target.value)} />
+                                        <p className="px-4">Selected Date: {input.senin}</p>
+                                        <input type="date" name="senin" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
                                 <div className="relative py-3 px-4 flex-auto">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {date}</p>
-                                        <input type="date" onChange={(e) => setDate(e.target.value)} />
+                                        <p className="px-4">Selected Date: {input.selasa}</p>
+                                        <input type="date" name="selasa" onChange={handleOnChange} />
+                                    </button>
+                                    {/* body/time */}
+                                </div>
+                                <div className="relative py-3 px-4 flex-auto">
+                                    {/* body/dropdown */}
+                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
+                                        <p className="px-4">Selected Date: {input.rabu}</p>
+                                        <input type="date" name="rabu" onChange={handleOnChange} />
+                                    </button>
+                                    {/* body/time */}
+                                </div>
+                                <div className="relative py-3 px-4 flex-auto">
+                                    {/* body/dropdown */}
+                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
+                                        <p className="px-4">Selected Date: {input.kamis}</p>
+                                        <input type="date" name="kamis" onChange={handleOnChange} />
+                                    </button>
+                                    {/* body/time */}
+                                </div>
+                                <div className="relative py-3 px-4 flex-auto">
+                                    {/* body/dropdown */}
+                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
+                                        <p className="px-4">Selected Date: {input.jumat}</p>
+                                        <input type="date" name="jumat" onChange={handleOnChange} />
                                     </button>
                                     {/* body/time */}
                                 </div>
