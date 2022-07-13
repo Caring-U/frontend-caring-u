@@ -1,8 +1,29 @@
 import { useState } from "react";
 import NavbarCustom from "../../components/NavbarCustom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckoutPage() {
+  const navigate = useNavigate();
   const [data, setData] = useState(JSON.parse(localStorage.getItem("order")));
+  const [bank, setBank] = useState({});
+  const handleSubmit = () => {
+    const input = {
+      schedulePsikologId: data.scheduleId,
+      bank: bank.name,
+    };
+    axios
+      .post("/client/booking", input, {
+        headers: { access_token: localStorage.getItem("access_token") },
+      })
+      .then(({ data }) => {
+        console.log(data);
+        navigate("/client");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <NavbarCustom />
@@ -15,15 +36,42 @@ export default function CheckoutPage() {
             <div className="flex flex-col gap-2">
               <div className="flex justify-between border px-4 h-18">
                 <img src="/foto/Bank-BCA-Logo.png" alt="BCA" className="w-20" />
-                <button>Pilih</button>
+                <button
+                  onClick={() => {
+                    setBank({
+                      img: "/foto/Bank-BCA-Logo.png",
+                      name: "BCA",
+                    });
+                  }}
+                >
+                  Pilih
+                </button>
               </div>
               <div className="flex justify-between border px-4 py-3 h-14">
                 <img src="/foto/Bank-BNI-Logo.png" alt="BNI" className="w-20" />
-                <button>Pilih</button>
+                <button
+                  onClick={() => {
+                    setBank({
+                      img: "/foto/Bank-BNI-Logo.png",
+                      name: "BNI",
+                    });
+                  }}
+                >
+                  Pilih
+                </button>
               </div>
               <div className="flex justify-between border px-4 py-3 h-14">
                 <img src="/foto/Bank-BRI-Logo.png" alt="BRI" className="w-20" />
-                <button>Pilih</button>
+                <button
+                  onClick={() => {
+                    setBank({
+                      img: "/foto/Bank-BRI-Logo.png",
+                      name: "BRI",
+                    });
+                  }}
+                >
+                  Pilih
+                </button>
               </div>
               <div className="flex justify-between border px-4 h-18">
                 <img
@@ -31,7 +79,16 @@ export default function CheckoutPage() {
                   alt="Permata"
                   className="w-20"
                 />
-                <button>Pilih</button>
+                <button
+                  onClick={() => {
+                    setBank({
+                      img: "/foto/Bank-Permata-Logo.png",
+                      name: "permata",
+                    });
+                  }}
+                >
+                  Pilih
+                </button>
               </div>
             </div>
           </div>
@@ -55,12 +112,15 @@ export default function CheckoutPage() {
             </h1>
             <div className="flex justify-between mb-4 text-semibold text-gray-500">
               <h1>Transfer Melalui Bank</h1>
-              <img src="/foto/Bank-BNI-Logo.png" alt="" className="w-20" />
+              <img src={bank.img} alt="" className="w-20" />
             </div>
           </div>
           <div>
             <div className="flex justify-end mt-20">
-              <button className="bg-sky-600 text-white px-20 py-2 rounded-lg">
+              <button
+                onClick={handleSubmit}
+                className="bg-sky-600 text-white px-20 py-2 rounded-lg"
+              >
                 Submit
               </button>
             </div>
