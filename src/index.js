@@ -6,7 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-const baseURL = "http://localhost:3000";
+// const baseURL = "http://localhost:3000";
+const baseURL =
+  "http://ec2-18-141-223-254.ap-southeast-1.compute.amazonaws.com:3000";
 
 axios.defaults.baseURL = baseURL;
 

@@ -25,7 +25,7 @@ const LoginPage = () => {
           case "client":
             navigate("/client");
             break;
-          case "psycolog":
+          case "psikolog":
             navigate("/psycolog");
             break;
           default:
