@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { myDateFormat } from "../helpers/CustomDate";
+import { isCurrentDate, myDateFormat } from "../helpers/CustomDate";
 
 export default function HomePagePsycolog() {
     let [schedule, setSchedule] = useState([]);
@@ -13,7 +13,7 @@ export default function HomePagePsycolog() {
             })
             .then(({ data }) => {
                 setSchedule(data.result.rows);
-                // console.log(data.result.rows);
+                console.log(data.result.rows);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -76,7 +76,7 @@ export default function HomePagePsycolog() {
                                         <thead>
                                             <tr>
                                                 <th className="border border-slate-300">Date</th>
-                                                <th className="border border-slate-300">Time</th>
+                                                {/* <th className="border border-slate-300">Time</th> */}
                                                 <th className="border border-slate-300">Status</th>
                                                 <th className="border border-slate-300">Room</th>
                                             </tr>
@@ -87,8 +87,8 @@ export default function HomePagePsycolog() {
                                                     <>
                                                         <tr>
                                                             <td className="border border-slate-300">{myDateFormat(sec.day)}</td>
-                                                            <td className="border border-slate-300">{sec.time}</td>
-                                                            {sec.CustomerBooking.paymentStatus == "paid" ? (
+                                                            {/* <td className="border border-slate-300">{sec.time}</td> */}
+                                                            {/* {sec.CustomerBooking !== null && sec.CustomerBooking.paymentStatus == "paid" ? (
                                                                 <>
                                                                     <td className="border border-slate-300 font-bold uppercase text-xs ">Scheduled</td>
                                                                     <td className="border border-slate-300">
@@ -103,7 +103,7 @@ export default function HomePagePsycolog() {
                                                             ) : (
                                                                 <>
                                                                     <td className="border border-slate-300 font-bold uppercase text-xs ">Free Booking</td>
-                                                                    <td>
+                                                                    <td className="border border-slate-300">
                                                                         <button
                                                                             className="bg-gray-500 text-white active:bg-gray-600 font-bold uppercase text-xs px-4 py-1 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                                                             type="button"
@@ -111,6 +111,27 @@ export default function HomePagePsycolog() {
                                                                             Hasn't Been Yet
                                                                         </button>
                                                                     </td>
+                                                                </>
+                                                            )} */}
+                                                            {sec.CustomerBooking !== null && sec.CustomerBooking.paymentStatus == "paid" ? (
+                                                                <>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">Scheduled</td>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">
+                                                                        {sec.linkMeet && isCurrentDate(sec.SchedulePsikolog?.day) && sec.paymentStatus == "paid" ? (
+                                                                            <a href={sec.linkMeet} className="bg-sky-600 text-white px-2 py-1 rounded-lg">
+                                                                                Go To Room
+                                                                            </a>
+                                                                        ) : (
+                                                                            <button className="bg-amber-600 text-white px-2 py-1 rounded-lg" disabled>
+                                                                                Waiting . . .
+                                                                            </button>
+                                                                        )}
+                                                                    </td>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">Free Booking</td>
+                                                                    <td className="border border-slate-300 font-bold uppercase text-xs ">NO Room</td>
                                                                 </>
                                                             )}
                                                         </tr>

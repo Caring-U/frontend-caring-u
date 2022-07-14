@@ -1,9 +1,11 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
+import { myDateFormat } from "../helpers/CustomDate";
 
 export default function ProfilePagePsycolog() {
     const [showModal, setShowModal] = useState(false);
     const [profile, setProfile] = useState();
+    const [schedule, setSchedule] = useState();
 
     useEffect(() => {
         axios
@@ -19,21 +21,36 @@ export default function ProfilePagePsycolog() {
             .catch((err) => console.log(err));
     }, []);
 
-    const [input, setInput] = useState({
-        day1: "",
-        day2: "",
-        day3: "",
-        day4: "",
-        day5: "",
-    });
+    const [input, setInput] = useState([]);
 
     function handleOnChange(e) {
-        const { name, value } = e.target;
-        setInput({ ...input, [name]: value });
+        const { value } = e.target;
+        setSchedule(value);
     }
-
-    function handleSave() {
-        setShowModal(false);
+    async function handleSave() {
+        try {
+            console.log("SAVE");
+            input.forEach((el) => {
+                console.log(el);
+                // axios.post("/psikolog/profile/schedule", {
+                //     headers: {
+                //         access_token: localStorage.getItem("access_token"),
+                //     },
+                //     data: { day: el },
+                // });
+                axios({
+                    url: "http://localhost:3000/psikolog/profile/schedule/",
+                    method: "POST",
+                    headers: {
+                        access_token: localStorage.getItem("access_token"),
+                    },
+                    data: { day: el },
+                });
+            });
+            setShowModal(false);
+        } catch (error) {
+            console.log(error);
+        }
     }
     function handleCancel() {
         setShowModal(false);
@@ -74,7 +91,7 @@ export default function ProfilePagePsycolog() {
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                                         <div className="relative">
-                                            <img alt="..." src={profile.imageUrl} className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16" style={{ maxWidth: "150px" }} />
+                                            <img alt="..." src={profile?.imageUrl} className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16" style={{ maxWidth: "150px" }} />
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -92,7 +109,7 @@ export default function ProfilePagePsycolog() {
                                     <div className="w-full lg:w-4/12 px-4 lg:order-1"></div>
                                 </div>
                                 <div className="text-center mt-12">
-                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">{profile.fullname}</h3>
+                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-gray-800 mb-2">{profile?.fullname}</h3>
                                     <div className="text-sm leading-normal mt-0 mb-2 text-gray-500 font-bold uppercase">
                                         <i className="fas fa-map-marker-alt mr-2 text-lg text-gray-500"></i> Kelapa Gading, DKI Jakarta
                                     </div>
@@ -108,7 +125,7 @@ export default function ProfilePagePsycolog() {
                                 <div className="mt-10 py-10 border-t border-gray-300 text-center">
                                     <div className="flex flex-wrap justify-center">
                                         <div className="w-full lg:w-9/12 px-4">
-                                            <p className="mb-4 text-lg leading-relaxed text-gray-800">{profile.description}</p>
+                                            <p className="mb-4 text-lg leading-relaxed text-gray-800">{profile?.description}</p>
                                             <a href="#pablo" className="font-normal text-blue-500" onClick={(e) => e.preventDefault()}>
                                                 Setting Profile
                                             </a>
@@ -134,43 +151,47 @@ export default function ProfilePagePsycolog() {
                                     </button>
                                 </div>
                                 {/*body*/}
-                                <div className="relative py-3 px-4 flex-auto row-auto ">
+                                <table className="table-auto border-separate border-spacing-2 border border-slate-400">
+                                    <thead>
+                                        <tr>
+                                            <th className="border border-slate-300">Date</th>
+                                            <th className="border border-slate-300">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {input.map((sec, i) => {
+                                            return (
+                                                <>
+                                                    <tr key={i}>
+                                                        <td className="border border-slate-300">{sec}</td>
+                                                        <td className="border border-slate-300">
+                                                            <button
+                                                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-1 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                                                type="button"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+
+                                <div className="relative py-3 px-4 flex gap-4">
                                     {/* body/dropdown */}
                                     <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.day1}</p>
-                                        <input type="date" name="day1" onChange={handleOnChange} />
+                                        <p className="px-4">Selected Date: {""}</p>
+                                        <input type="date" name="day1" value={schedule} onChange={handleOnChange} />
                                     </button>
-                                    {/* body/time */}
-                                </div>
-                                <div className="relative py-3 px-4 flex-auto">
-                                    {/* body/dropdown */}
-                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.day2}</p>
-                                        <input type="date" name="day2" onChange={handleOnChange} />
-                                    </button>
-                                    {/* body/time */}
-                                </div>
-                                <div className="relative py-3 px-4 flex-auto">
-                                    {/* body/dropdown */}
-                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.day3}</p>
-                                        <input type="date" name="day3" onChange={handleOnChange} />
-                                    </button>
-                                    {/* body/time */}
-                                </div>
-                                <div className="relative py-3 px-4 flex-auto">
-                                    {/* body/dropdown */}
-                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.day4}</p>
-                                        <input type="date" name="day4" onChange={handleOnChange} />
-                                    </button>
-                                    {/* body/time */}
-                                </div>
-                                <div className="relative py-3 px-4 flex-auto">
-                                    {/* body/dropdown */}
-                                    <button className="relative flex jutify-center items-center bg-white text-gray-600 rounded focus:outline-none focus:ring ring-gray-200 border shadow group">
-                                        <p className="px-4">Selected Date: {input.day5}</p>
-                                        <input type="date" name="day5" onChange={handleOnChange} />
+                                    <button
+                                        onClick={() => {
+                                            setInput([...input, schedule]);
+                                            setSchedule("");
+                                        }}
+                                    >
+                                        Add
                                     </button>
                                     {/* body/time */}
                                 </div>
@@ -179,14 +200,14 @@ export default function ProfilePagePsycolog() {
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => handleCancel}
+                                        onClick={handleCancel}
                                     >
                                         Close
                                     </button>
                                     <button
                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => handleSave}
+                                        onClick={handleSave}
                                     >
                                         Save Changes
                                     </button>
